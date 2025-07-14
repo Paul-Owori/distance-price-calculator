@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { DeliveryRequest, DeliveryResponse } from '@/types';
+import { DeliveryResponse } from '@/types';
 
 const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
@@ -59,8 +59,9 @@ export async function POST(request: NextRequest) {
 
 // Polyline decoding function
 function decodePolyline(encoded: string) {
-  let points = [];
-  let index = 0, len = encoded.length;
+  const points = [];
+  let index = 0;
+  const len = encoded.length
   let lat = 0, lng = 0;
 
   while (index < len) {
@@ -70,7 +71,7 @@ function decodePolyline(encoded: string) {
       result |= (b & 0x1f) << shift;
       shift += 5;
     } while (b >= 0x20);
-    let dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+    const dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
     lat += dlat;
 
     shift = 0;
@@ -80,7 +81,7 @@ function decodePolyline(encoded: string) {
       result |= (b & 0x1f) << shift;
       shift += 5;
     } while (b >= 0x20);
-    let dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+    const dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
     lng += dlng;
 
     points.push({
